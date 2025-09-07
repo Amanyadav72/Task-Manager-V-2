@@ -2,26 +2,244 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Task Manager</title>
+  <title>{% block title %}Task Manager - Stay Organized{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern task management application to help you stay organized and productive.">
+  
+  <!-- Enhanced Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+  
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <!-- Preload important resources -->
+  <link rel="preload" href="{{ url_for('static', filename='style.css') }}" as="style">
+  
+  <!-- Theme Color for mobile browsers -->
+  <meta name="theme-color" content="#4f46e5">
+  
+  <!-- Progressive Web App support -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
-  <nav class="navbar">
-  <div class="logo">Task Manager</div>
-  <div class="nav-links">
-    {% if current_user.is_authenticated %}
-      <a href="{{ url_for('tasks.dashboard') }}">Dashboard</a>
-      <a href="{{ url_for('auth.logout') }}">Logout</a>
-    {% else %}
-      <a href="{{ url_for('auth.login') }}">Login</a>
-      <a href="{{ url_for('auth.signup') }}">Sign Up</a>
-    {% endif %}
+  <!-- Loading indicator -->
+  <div id="loading-indicator" style="display: none;">
+    <div class="loading-spinner"></div>
   </div>
-</nav>
 
+  <!-- Enhanced Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <span>📋 Task Manager</span>
+    </div>
+    <div class="nav-links">
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('tasks.dashboard') }}" class="nav-link">
+          <span>🏠</span> Dashboard
+        </a>
+        <a href="{{ url_for('tasks.add_task') }}" class="nav-link">
+          <span>➕</span> Add Task
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="nav-link logout-btn">
+          <span>👋</span> Logout
+        </a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}" class="nav-link">
+          <span>🔑</span> Login
+        </a>
+        <a href="{{ url_for('auth.signup') }}" class="nav-link">
+          <span>📝</span> Sign Up
+        </a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Flash Messages Area -->
+  <div id="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()">×</button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Main Content -->
   <main>
     {% block content %}{% endblock %}
   </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Task Manager. Built with ❤️ using Flask.</p>
+      <div class="footer-links">
+        <a href="#" onclick="toggleTheme()">🌙 Dark Mode</a>
+        <a href="#" onclick="showShortcuts()">⌨️ Shortcuts</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div id="shortcuts-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="hideShortcuts()">&times;</span>
+      <h3>Keyboard Shortcuts</h3>
+      <div class="shortcuts-list">
+        <div class="shortcut">
+          <span class="key">Ctrl + N</span>
+          <span>New Task</span>
+        </div>
+        <div class="shortcut">
+          <span class="key">Ctrl + D</span>
+          <span>Dashboard</span>
+        </div>
+        <div class="shortcut">
+          <span class="key">Escape</span>
+          <span>Close Modal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced JavaScript -->
+  <script>
+    // Theme toggle functionality
+    // Replace the theme toggle section in your base.html with this enhanced version
+
+// Enhanced theme toggle functionality
+function toggleTheme() {
+  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.contains('dark-theme');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  
+  // Update the toggle button text
+  const toggleButton = document.querySelector('[onclick="toggleTheme()"]');
+  if (toggleButton) {
+    toggleButton.innerHTML = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  }
+}
+
+// Load saved theme and override system preference
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme');
+  
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+  } else if (savedTheme === 'light') {
+    document.body.classList.remove('dark-theme');
+  } else {
+    // First time visitor - respect system preference but save it
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  }
+  
+  // Update toggle button text based on current theme
+  const toggleButton = document.querySelector('[onclick="toggleTheme()"]');
+  if (toggleButton) {
+    const isDark = document.body.classList.contains('dark-theme');
+    toggleButton.innerHTML = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  }
+});
+
+// Listen for system theme changes but only if user hasn't set a preference
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  const savedTheme = localStorage.getItem('theme');
+  if (!savedTheme) {
+    // Only auto-switch if user hasn't manually set a theme
+    if (e.matches) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }
+});
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+      }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        switch(e.key) {
+          case 'n':
+            e.preventDefault();
+            window.location.href = '{{ url_for("tasks.add_task") if current_user.is_authenticated else "#" }}';
+            break;
+          case 'd':
+            e.preventDefault();
+            window.location.href = '{{ url_for("tasks.dashboard") if current_user.is_authenticated else "#" }}';
+            break;
+        }
+      }
+      
+      if (e.key === 'Escape') {
+        hideShortcuts();
+      }
+    });
+
+    // Shortcuts modal
+    function showShortcuts() {
+      document.getElementById('shortcuts-modal').style.display = 'flex';
+    }
+
+    function hideShortcuts() {
+      document.getElementById('shortcuts-modal').style.display = 'none';
+    }
+
+    // Auto-hide flash messages
+    document.addEventListener('DOMContentLoaded', () => {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(alert => {
+        setTimeout(() => {
+          alert.style.opacity = '0';
+          setTimeout(() => alert.remove(), 300);
+        }, 5000);
+      });
+    });
+
+    // Add loading states for navigation
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (link.href && !link.href.includes('#')) {
+          showLoading();
+        }
+      });
+    });
+
+    function showLoading() {
+      document.getElementById('loading-indicator').style.display = 'flex';
+    }
+
+    function hideLoading() {
+      document.getElementById('loading-indicator').style.display = 'none';
+    }
+
+    // Hide loading when page loads
+    window.addEventListener('load', hideLoading);
+  </script>
+
+  {% block extra_scripts %}{% endblock %}
 </body>
 </html>
+
+
+
+
+
+
