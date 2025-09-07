@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="dashboard">
+    <h2>Welcome, {{ current_user.username }}</h2>
+    <a href="{{ url_for('tasks.add_task') }}" class="add-btn">+ Add Task</a>
+    <ul class="task-list">
+      {% for task in tasks %}
+        <li data-id="{{ task.id }}" class="{% if task.completed %}done{% endif %}">
+          {{ task.title }}
+        </li>
+      {% else %}
+        <li>No tasks yet. Add one!</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
+
+ 
