@@ -44,8 +44,7 @@ A modern, feature-rich task management web application built with Flask. Stay or
 ## 🖥️📸 Screenshots
 
 ### Login Signup Page
-![logi & Signup](<img width="1920" height="1080" alt="Screenshot 2025-09-08 140015" src="https://github.com/user-attachments/assets/3ab9961a-984c-494c-b78d-323729fc2749" />
-)
+![logi & Signup]<img width="1920" height="1080" alt="Screenshot 2025-09-08 140015" src="https://github.com/user-attachments/assets/3ab9961a-984c-494c-b78d-323729fc2749" />
 
 ### Dashboard View
 ![Dashboard]
