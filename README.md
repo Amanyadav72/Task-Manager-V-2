@@ -41,23 +41,23 @@ A modern, feature-rich task management web application built with Flask. Stay or
 - **PWA Ready**: Progressive Web App capabilities with offline manifest
 - **Character Limits**: Smart input validation with real-time character counting
 
-## 🖥️ Screenshots
+## 🖥️📸 Screenshots
 
 ### Login Signup Page
 ![logi & Signup](<img width="1920" height="1080" alt="Screenshot 2025-09-08 140015" src="https://github.com/user-attachments/assets/3ab9961a-984c-494c-b78d-323729fc2749" />
 )
 
 ### Dashboard View
-![Dashboard](<img width="1920" height="1080" alt="Screenshot 2025-09-08 141034" src="https://github.com/user-attachments/assets/1a92ee51-7219-4814-b5ce-4bff7e45b3e6" />
-)
+![Dashboard]
+<img width="1920" height="1080" alt="Screenshot 2025-09-08 141034" src="https://github.com/user-attachments/assets/1a92ee51-7219-4814-b5ce-4bff7e45b3e6" />
 
 ### Task Creation
-![Add Task](<img width="1920" height="1080" alt="Screenshot 2025-09-08 140529" src="https://github.com/user-attachments/assets/d377c45b-6b10-4bb7-9687-a1e867e6b99b" />
-)
+![Add Task]
+<img width="1920" height="1080" alt="Screenshot 2025-09-08 140529" src="https://github.com/user-attachments/assets/d377c45b-6b10-4bb7-9687-a1e867e6b99b" />
 
 ### Dark Theme
-![Dark Theme](<img width="1920" height="1080" alt="Screenshot 2025-09-08 141201" src="https://github.com/user-attachments/assets/8b70ec61-8f2a-41b0-984b-dc7a9201dd57" />
-)
+![Dark Theme]
+<img width="1920" height="1080" alt="Screenshot 2025-09-08 141201" src="https://github.com/user-attachments/assets/8b70ec61-8f2a-41b0-984b-dc7a9201dd57" />
 
 ## 🚀 Quick Start
 
