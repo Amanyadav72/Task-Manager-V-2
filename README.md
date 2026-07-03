@@ -1,6 +1,6 @@
 # 📋 Task Manager Pro
 
-A modern, feature-rich task management web application built with Flask. Stay organized and boost your productivity with an intuitive interface, smart features, and responsive design.
+A modern App, feature-rich task management web application built with Flask. Stay organized and boost your productivity with an intuitive interface, smart features, and responsive design.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-brightgreen)](https://task-manager-pro-dacs.onrender.com) ![Flask](https://img.shields.io/badge/Flask-Web%20App-blue) ![Python](https://img.shields.io/badge/Python-3.9+-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Deployment](https://img.shields.io/badge/Deployed%20on-Render-purple)
 
